@@ -23,8 +23,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("and other items-----")
 }
 
+func handler2(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("and other ite222s-----")
+}
+
 func main() {
-	fmt.Println("test here----")
+	mux := http.NewServeMux()
+	fmt.Println("test again------")
 	http.HandleFunc("/monkeys", handler)
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	// mux.HandleFunc("/", handler2)
+	mux.Handle("/", http.FileServer(http.Dir("./src/static")))
+	log.Fatal(http.ListenAndServe(":8000", mux))
 }

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Index</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/styles.css">
+  <script defer src="js/index.js" type="text/javascript"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+</head>
+
+<body x-data="{ navActive: 'marvel' }">
+  <nav>
+    <ul>
+      <li class="nav__item">
+        <a @click="navActive='home'" href="#">
+          <svg id="logo" @click="$event.target.style.animation = 'runAway 8s'"
+            @mouseenter="$event.target.style.animation = 'runAway 8s'"
+            @animationend="$event.target.style.animation = null" fill="none" height="35px" width="35px"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 154 154">
+            <circle cx="77" cy="77" fill="#05998b" r="77" />
+            <path d="M81.375 18.667l-38.75 70H77.5l-3.875 46.666 38.75-70H77.5z" fill="#fff" />
+          </svg>
+        </a>
+      </li>
+      <li class="nav__item"><a @click="navActive='home'" href="#">Playground</a></li>
+      <li class="nav__item"><a @click="navActive='marvel'" href="#">Marvel</a></li>
+      <li class="nav__item"><a @click="navActive='about'" href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section x-show="navActive == 'home'">
+      <div class="card">
+        <h3>Who am I?</h3>
+        <p>This is meant as a demo for a very basic FastAPI webapp. Statically served HTML/CSS/JS files supported by a
+          Python async API and relational db.  Just the Marvel module for now.  Maybe more in the future.</p>
+      </div>
+    </section>
+
+    <section id="marvel" x-show="navActive == 'marvel'" x-data="marvel()">
+      <div class="marvel__main">
+
+        <!-- Primary Character Card -->
+        <div class="card card__marvel">
+          <div class="search">
+            <form @submit.prevent="getCharacterByName()">
+              <input x-model="characterSearch" class="search__input" type="text" placeholder="Character Search">
+              <svg @click="getCharacterByName()" class="search__glass" viewBox="0 0 512 512" width="100">
+                <path
+                  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z" />
+              </svg>
+            </form>
+            <svg @click="clearCharacter()" class="search__close" width="100" viewBox="0 0 352 512">
+              <path
+                d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" />
+            </svg>
+          </div>
+          <div class="card__image">
+            <img
+              src="data:image/svg+xml;base64,PHN2ZwogICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgICB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIKICAgIHZpZXdCb3g9IjAgMCA1MDAgNTAwIgogID4KICA8ZwogICAgICBpZD0ibGF5ZXIxIgogICAgICBpbmtzY2FwZTpsYWJlbD0iTGF5ZXIgMSIKICAgICAgaW5rc2NhcGU6Z3JvdXBtb2RlPSJsYXllciIKICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAtNTUyLjM2KSIKICAgID4KICAgIDxnIGlkPSJnMzgwMCI+CiAgICAgIDxyZWN0CiAgICAgICAgICBpZD0icmVjdDI5ODciCiAgICAgICAgICBzdHlsZT0iZmlsbDojYjNiM2IzIgogICAgICAgICAgcng9IjAiCiAgICAgICAgICByeT0iMCIKICAgICAgICAgIGhlaWdodD0iNTAwIgogICAgICAgICAgd2lkdGg9IjUwMCIKICAgICAgICAgIHk9IjU1Mi4zNiIKICAgICAgICAgIHg9IjAiCiAgICAgIC8+CiAgICAgIDxwYXRoCiAgICAgICAgICBpZD0icGF0aDMwMDEiCiAgICAgICAgICBkPSJtMy45NDQ4IDEwNDguNCA0OTIuMTItNDkyLjA5IgogICAgICAgICAgc3R5bGU9InN0cm9rZTojZmZmZmZmO3N0cm9rZS13aWR0aDo3Ljg4OTU7ZmlsbDojZmZmZmZmIgogICAgICAgICAgaW5rc2NhcGU6Y29ubmVjdG9yLWN1cnZhdHVyZT0iMCIKICAgICAgLz4KICAgICAgPHBhdGgKICAgICAgICAgIGlkPSJwYXRoMzAwMyIKICAgICAgICAgIGQ9Im0zLjk0NDggNTU2LjMxIDQ5Mi4xMiA0OTIuMDkiCiAgICAgICAgICBzdHlsZT0ic3Ryb2tlOiNmZmZmZmY7c3Ryb2tlLXdpZHRoOjcuODg5NTtmaWxsOiNmZmZmZmYiCiAgICAgICAgICBpbmtzY2FwZTpjb25uZWN0b3ItY3VydmF0dXJlPSIwIgogICAgICAvPgogICAgICA8cmVjdAogICAgICAgICAgaWQ9InJlY3QzNzczIgogICAgICAgICAgc3R5bGU9ImZpbGw6I2IzYjNiMyIKICAgICAgICAgIGhlaWdodD0iNjMuOTM1IgogICAgICAgICAgd2lkdGg9IjM3Ny42IgogICAgICAgICAgeT0iNzcwLjk0IgogICAgICAgICAgeD0iNjIuMjk1IgogICAgICAvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="placeholder">
+            <img @load="characterLoaded = true" x-show="characterLoaded" x-transition :src="character.thumbnail" alt="primary character">
+          </div>
+          <div class="card__chips shadow">
+            <div x-show="characterLoaded" x-transition class="content">
+              <span>Comics: <span x-text="character.comic_count"></span></span>
+              <span>Series: <span x-text="character.series_count"></span></span>
+              <span>Stories: <span x-text="character.stories_count"></span></span>
+            </div>
+          </div>
+          <div class="card__name shadow">
+            <h3 x-text="character.name" x-show="characterLoaded" x-transition></h3>
+          </div>
+          <div class="card__description shadow">
+            <textarea x-text="character.description" x-show="characterLoaded && character.description" x-transition
+              cols="30" rows="10" disabled></textarea>
+          </div>
+          <div class="card__resources">
+            <button @click="getComicsByCharacter()" :disabled="!characterLoaded">Comics</button>
+            <button @click="getAffiliatesByCharacter()"
+              :disabled="!characterLoaded || !character.has_comics">Affiliates</button>
+          </div>
+        </div>
+
+        <!-- List Card -->
+        <div class="card__marvel card">
+          <div class="shadow stretch">
+            <ul x-show="itemsLoaded && mode == 'comics'" x-transition class="list__content content">
+              <template x-for="c in comics">
+                <li @click="getComicDetail(c)" x-text="c.title"></li>
+              </template>
+            </ul>
+            <ul x-show="itemsLoaded && mode == 'affiliates'" x-transition class="list__content content">
+              <template x-for="a in affiliates">
+                <li @click="getAffiliateDetail(a)" x-text="a.name"></li>
+              </template>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Detail Card -->
+        <div class="card card__marvel">
+          <!-- Comic Detail -->
+          <div x-show="mode == null || itemsLoaded && mode == 'comics'" x-transition class="card__contents">
+            <div class="card__image">
+              <img
+                src="data:image/svg+xml;base64,PHN2ZwogICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgICB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIKICAgIHZpZXdCb3g9IjAgMCA1MDAgNTAwIgogID4KICA8ZwogICAgICBpZD0ibGF5ZXIxIgogICAgICBpbmtzY2FwZTpsYWJlbD0iTGF5ZXIgMSIKICAgICAgaW5rc2NhcGU6Z3JvdXBtb2RlPSJsYXllciIKICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAtNTUyLjM2KSIKICAgID4KICAgIDxnIGlkPSJnMzgwMCI+CiAgICAgIDxyZWN0CiAgICAgICAgICBpZD0icmVjdDI5ODciCiAgICAgICAgICBzdHlsZT0iZmlsbDojYjNiM2IzIgogICAgICAgICAgcng9IjAiCiAgICAgICAgICByeT0iMCIKICAgICAgICAgIGhlaWdodD0iNTAwIgogICAgICAgICAgd2lkdGg9IjUwMCIKICAgICAgICAgIHk9IjU1Mi4zNiIKICAgICAgICAgIHg9IjAiCiAgICAgIC8+CiAgICAgIDxwYXRoCiAgICAgICAgICBpZD0icGF0aDMwMDEiCiAgICAgICAgICBkPSJtMy45NDQ4IDEwNDguNCA0OTIuMTItNDkyLjA5IgogICAgICAgICAgc3R5bGU9InN0cm9rZTojZmZmZmZmO3N0cm9rZS13aWR0aDo3Ljg4OTU7ZmlsbDojZmZmZmZmIgogICAgICAgICAgaW5rc2NhcGU6Y29ubmVjdG9yLWN1cnZhdHVyZT0iMCIKICAgICAgLz4KICAgICAgPHBhdGgKICAgICAgICAgIGlkPSJwYXRoMzAwMyIKICAgICAgICAgIGQ9Im0zLjk0NDggNTU2LjMxIDQ5Mi4xMiA0OTIuMDkiCiAgICAgICAgICBzdHlsZT0ic3Ryb2tlOiNmZmZmZmY7c3Ryb2tlLXdpZHRoOjcuODg5NTtmaWxsOiNmZmZmZmYiCiAgICAgICAgICBpbmtzY2FwZTpjb25uZWN0b3ItY3VydmF0dXJlPSIwIgogICAgICAvPgogICAgICA8cmVjdAogICAgICAgICAgaWQ9InJlY3QzNzczIgogICAgICAgICAgc3R5bGU9ImZpbGw6I2IzYjNiMyIKICAgICAgICAgIGhlaWdodD0iNjMuOTM1IgogICAgICAgICAgd2lkdGg9IjM3Ny42IgogICAgICAgICAgeT0iNzcwLjk0IgogICAgICAgICAgeD0iNjIuMjk1IgogICAgICAvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="placeholder">
+              <img @load="comicLoaded = true" x-show="comicLoaded" x-transition :src="comic.thumbnail" alt="comic">
+            </div>
+            <div class="card__chips shadow">
+              <div x-show="comicLoaded" x-transition class="content">
+                <span>Issue Number: <span x-text="comic.issue_number"></span></span>
+                <span>Page Count: <span x-text="comic.page_count"></span></span>
+              </div>
+            </div>
+            <div class="card__name shadow">
+              <h3 x-text="comic.title" x-show="comicLoaded  && comic.title" x-transition></h3>
+            </div>
+            <div class="card__stat shadow">
+              <p x-text="comic.isbn" x-show="comicLoaded && comic.isbn" x-transition class="content"></p>
+            </div>
+            <div class="card__description shadow">
+              <textarea x-text="comic.description" x-show="comicLoaded && comic.description" x-transition cols="30"
+                rows="10" disabled></textarea>
+            </div>
+            <div class="card__stat shadow">
+              <p x-show="comicLoaded  && comic.url_detail" x-transition>Get the Details <a :href="comic.url_detail"
+                  class="content" target="_blank" rel="noopener noreferrer">Here</a>!</p>
+            </div>
+          </div>
+          <!-- Affiliate Detail -->
+          <div x-show="itemsLoaded && mode == 'affiliates'" x-transition class="card__contents">
+            <div class="card__image">
+              <img
+                src="data:image/svg+xml;base64,PHN2ZwogICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgICB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIKICAgIHZpZXdCb3g9IjAgMCA1MDAgNTAwIgogID4KICA8ZwogICAgICBpZD0ibGF5ZXIxIgogICAgICBpbmtzY2FwZTpsYWJlbD0iTGF5ZXIgMSIKICAgICAgaW5rc2NhcGU6Z3JvdXBtb2RlPSJsYXllciIKICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAtNTUyLjM2KSIKICAgID4KICAgIDxnIGlkPSJnMzgwMCI+CiAgICAgIDxyZWN0CiAgICAgICAgICBpZD0icmVjdDI5ODciCiAgICAgICAgICBzdHlsZT0iZmlsbDojYjNiM2IzIgogICAgICAgICAgcng9IjAiCiAgICAgICAgICByeT0iMCIKICAgICAgICAgIGhlaWdodD0iNTAwIgogICAgICAgICAgd2lkdGg9IjUwMCIKICAgICAgICAgIHk9IjU1Mi4zNiIKICAgICAgICAgIHg9IjAiCiAgICAgIC8+CiAgICAgIDxwYXRoCiAgICAgICAgICBpZD0icGF0aDMwMDEiCiAgICAgICAgICBkPSJtMy45NDQ4IDEwNDguNCA0OTIuMTItNDkyLjA5IgogICAgICAgICAgc3R5bGU9InN0cm9rZTojZmZmZmZmO3N0cm9rZS13aWR0aDo3Ljg4OTU7ZmlsbDojZmZmZmZmIgogICAgICAgICAgaW5rc2NhcGU6Y29ubmVjdG9yLWN1cnZhdHVyZT0iMCIKICAgICAgLz4KICAgICAgPHBhdGgKICAgICAgICAgIGlkPSJwYXRoMzAwMyIKICAgICAgICAgIGQ9Im0zLjk0NDggNTU2LjMxIDQ5Mi4xMiA0OTIuMDkiCiAgICAgICAgICBzdHlsZT0ic3Ryb2tlOiNmZmZmZmY7c3Ryb2tlLXdpZHRoOjcuODg5NTtmaWxsOiNmZmZmZmYiCiAgICAgICAgICBpbmtzY2FwZTpjb25uZWN0b3ItY3VydmF0dXJlPSIwIgogICAgICAvPgogICAgICA8cmVjdAogICAgICAgICAgaWQ9InJlY3QzNzczIgogICAgICAgICAgc3R5bGU9ImZpbGw6I2IzYjNiMyIKICAgICAgICAgIGhlaWdodD0iNjMuOTM1IgogICAgICAgICAgd2lkdGg9IjM3Ny42IgogICAgICAgICAgeT0iNzcwLjk0IgogICAgICAgICAgeD0iNjIuMjk1IgogICAgICAvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="placeholder">
+              <img @load="affiliateLoaded = true" x-show="affiliateLoaded" x-transition :src="affiliate.thumbnail" alt="affiliated character">
+            </div>
+            <div class="card__chips shadow">
+              <div x-show="affiliateLoaded" x-transition class="content">
+                <span>Comics: <span x-text="affiliate.comic_count"></span></span>
+                <span>Series: <span x-text="affiliate.series_count"></span></span>
+                <span>Stories: <span x-text="affiliate.stories_count"></span></span>
+              </div>
+            </div>
+            <div class="card__name shadow">
+              <h3 x-text="affiliate.name" x-show="affiliateLoaded  && affiliate.name" x-transition></h3>
+            </div>
+            <div class="card__description shadow">
+              <textarea x-text="affiliate.description" x-show="affiliateLoaded && affiliate.description" x-transition
+                cols="30" rows="10" disabled></textarea>
+            </div>
+            <div class="card__stat shadow">
+              <p x-show="affiliateLoaded  && affiliate.url_wiki" x-transition>Get the Wiki <a :href="affiliate.url_wiki"
+                  class="content" target="_blank" rel="noopener noreferrer">Here</a>!</p>
+            </div>
+            <div class="card__stat shadow">
+              <p x-show="affiliateLoaded  && affiliate.url_detail" x-transition>Get the Details <a
+                  :href="affiliate.url_detail" class="content" target="_blank" rel="noopener noreferrer">Here</a>!</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="marvel__discovered">
+        <div class="container card">
+          <div class="shadow stretch">
+            <div @load.window="getDiscoveredCharacters()" x-show="discoveredLoaded" x-transition class="content">
+              <template x-for="d in discovered">
+                <div class="discovered__chips">
+                  <span @click="setCharacter(d)" x-text="d.name"></span>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section x-show="navActive == 'about'">
+      <div class="card">
+        <p>This was going to be about something...  Maybe it will someday!</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>
+      <p>Have fun! But dont touch the logo...</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>
